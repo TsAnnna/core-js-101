@@ -216,8 +216,23 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let min = 0;
+  let max = 0;
+
+  if (a > b) {
+    min = b;
+    max = a;
+  } else {
+    min = a;
+    max = b;
+  }
+
+  if (isStartIncluded && isEndIncluded) return `[${min}, ${max}]`;
+  if (!isStartIncluded && !isEndIncluded) return `(${min}, ${max})`;
+  if (isStartIncluded && !isEndIncluded) return `[${min}, ${max})`;
+
+  return `(${a}, ${b}]`;
 }
 
 
@@ -233,8 +248,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -275,8 +290,20 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const ccnArr = String(ccn).split('');
+  let sum = 0;
+
+  for (let i = ccnArr.length - 2; i >= 0; i -= 2) {
+    if (ccnArr[i] * 2 > 9) {
+      ccnArr[i] = ccnArr[i] * 2 - 9;
+    } else {
+      ccnArr[i] *= 2;
+    }
+  }
+
+  sum = ccnArr.reduce((res, elem) => res + +elem, 0);
+  return (sum % 10 === 0);
 }
 
 /**
@@ -293,8 +320,10 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  if (num <= 9) return num;
+  const res = String(num).split('').reduce((sum, elem) => sum + +elem, 0);
+  return getDigitalRoot(res);
 }
 
 
@@ -320,9 +349,24 @@ function getDigitalRoot(/* num */) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(/* str */) {
+  // const arr = new Array(8).fill(0);
+  // const brackets = ['[', ']', '(', ')', '<', '>', '{', '}'];
+  // const strArr = str.split('');
+
+  // strArr.forEach((elem) => {
+  //   arr[brackets.indexOf(elem)] += 1;
+  // });
+
+  // for (let i = 0; i < arr.length; i += 2) {
+  //   if (arr[i] !== arr[i + 1]) {
+  //     return false;
+  //   }
+  // }
+  // return true;
   throw new Error('Not implemented');
 }
 
+// console.log(isBracketsBalanced(']['));
 
 /**
  * Returns the string with n-ary (binary, ternary, etc, where n <= 10)
